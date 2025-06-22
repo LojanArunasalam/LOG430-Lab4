@@ -3,12 +3,16 @@ from rest_framework.decorators import api_view
 from caisse.services.domain_service import DomainService 
 from caisse.models import engine
 from sqlalchemy.orm import sessionmaker
+from django.utils.decorators import method_decorator 
+from django.views.decorators.cache import cache_page
 
 Session = sessionmaker(bind=engine)
 
-
+@cache_page(60 * 15, key_prefix='get_performances')
 @api_view(['GET'])
 def performances(request):
+    import time
+    time.sleep(2)
     session = Session()
     service = DomainService(session)
     performances_data = service.performances()
@@ -24,8 +28,11 @@ def performances(request):
         })
     return Response(result)
 
+@cache_page(60 * 15, key_prefix='get_report')
 @api_view(['GET'])
 def report(request, store_id):
+    import time 
+    time.sleep(2)
     session = Session()
     service = DomainService(session)
     report = service.generate_report(store_id)

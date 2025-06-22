@@ -3,31 +3,37 @@ services:
     container_name: django-client-1
     build: . 
     command: python src/app/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
     expose:
       - 8000"
   django-client-2: 
     container_name: django-client-2
     build: . 
     command: python src/app/manage.py runserver 0.0.0.0:8001
+    ports:
+      - "8001:8001"
     expose:
       - '8001'
   django-client-3: 
     container_name: django-client-3
     build: . 
     command: python src/app/manage.py runserver 0.0.0.0:8002
+    ports:
+      - "8002:8002"
     expose:
       - '8002'
-  db:
-    image: postgres:16
-    container_name: db
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
-    volumes: 
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
+  # db:
+  #   image: postgres:16
+  #   container_name: db
+  #   environment:
+  #     POSTGRES_USER: admin
+  #     POSTGRES_PASSWORD: admin
+  #     POSTGRES_DB: postgres
+  #   ports:
+  #     - "5432:5432"
+  #   volumes: 
+  #     - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
@@ -78,6 +84,13 @@ services:
       - django-client-1
       - django-client-2
       - django-client-3
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
 
 networks: 
   monitoring:

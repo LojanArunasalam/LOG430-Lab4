@@ -4,19 +4,27 @@ from caisse.services.stock_service import StockService
 from api.serializers import StockSerializer
 from caisse.models import engine
 from sqlalchemy.orm import sessionmaker
+from django.utils.decorators import method_decorator 
+from django.views.decorators.cache import cache_page
 
 Session = sessionmaker(bind=engine)
 
+@cache_page(60 * 15, key_prefix='get_all_stocks')
 @api_view(['GET'])
 def get_all_stocks(request):
+    import time
+    time.sleep(2) 
     session = Session()
     service = StockService(session)
     sales = service.get_all_stocks() or []
     serializer = StockSerializer(sales, many=True)
     return Response(serializer.data)
 
+@cache_page(60 * 15, key_prefix='get_stock_by_id')
 @api_view(['GET'])
 def get_stocks_by_id(request, id):
+    import time
+    time.sleep(2)
     session = Session()
     service = StockService(session)
     stock = service.get_stock_by_id(id) or []
