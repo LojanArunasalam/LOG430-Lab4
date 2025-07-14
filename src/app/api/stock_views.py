@@ -35,16 +35,16 @@ def get_stocks_by_id(request, id):
 def get_stocks_by_store(request, store_id):
     session = Session()
     service = StockService(session)
-    sales = service.get_stock_by_store(store_id) or []
-    serializer = StockSerializer(sales, many=True)
+    stocks = service.get_stock_by_store(store_id) or []
+    serializer = StockSerializer(stocks, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def get_stocks_by_store_and_product(request, product_id, store_id):
     session = Session()
     service = StockService(session)
-    sales = service.get_stock_by_product_and_store(product_id, store_id) or []
-    serializer = StockSerializer(sales, many=True)
+    stocks = service.get_stock_by_product_and_store(product_id, store_id) or []
+    serializer = StockSerializer(stocks, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])

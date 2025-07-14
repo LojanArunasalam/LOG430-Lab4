@@ -16,19 +16,14 @@ class MyUser(HttpUser):
         self.client.get("/api/v1/products")
 
     @task
+    def product_detail(self):
+        # Simulate a user checking a product detail api
+        product_id = rand.randint(1, 5)
+        self.client.get(f"/api/v1/products/{product_id}")
+
+
+    @task
     def stocks(self):
         # Simulate a user checking the stocks api
         store = rand.choice([1, 2, 3, 4, 5])
         self.client.get(f"/api/v1/stocks/store/{store}")
-
-    @task
-    def report(self):
-        # Simulate a user checking the stocks api
-        store = rand.choice([1, 2, 3, 4, 5])
-        self.client.get(f"/api/v1/report/{store}")
-
-    @task
-    def performances(self):
-        # Simulate a user checking the performances api
-        self.client.get("/api/v1/performances")
-

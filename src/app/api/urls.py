@@ -31,7 +31,7 @@ urlpatterns = [
     # Stock routes
     path('api/v1/stocks/', stock_views.get_all_stocks),
     path('api/v1/stocks/<int:id>/', stock_views.get_stocks_by_id),
-    path('api/v1/stocks/store/<int:id>/', stock_views.get_stocks_by_store),
+    path('api/v1/stocks/store/<int:store_id>/', stock_views.get_stocks_by_store),
     path('api/v1/stocks/store/<int:store_id>/product/<int:product_id>/', stock_views.get_stocks_by_store_and_product),
     path('api/v1/stocks/update/', stock_views.update_stock),
     path('api/v1/stocks/del/<int:id>/', stock_views.delete_stock),

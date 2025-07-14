@@ -4,12 +4,12 @@ from caisse.services.product_service import ProductService
 from api.serializers import ProductSerializer
 from caisse.models import engine, Product
 from sqlalchemy.orm import sessionmaker
-from django.utils.decorators import method_decorator 
-from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator 
+# from django.views.decorators.cache import cache_page
 
 Session = sessionmaker(bind=engine)
 
-@cache_page(60 * 15, key_prefix='get_all_products')
+# @cache_page(60 * 15, key_prefix='get_all_products')
 @api_view(['GET'])
 def get_all_products(request):
     import time 
@@ -20,7 +20,7 @@ def get_all_products(request):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
-@cache_page(60 * 15, key_prefix='get_product_by_id')
+# @cache_page(60 * 15, key_prefix='get_product_by_id')
 @api_view(['GET'])
 def get_product_by_id(request, id):
     import time 
@@ -33,7 +33,7 @@ def get_product_by_id(request, id):
     serializer = ProductSerializer(product)
     return Response(serializer.data)
 
-@api_view(['GET'])
+# @api_view(['GET'])
 def product_by_category(request, category):
     session = Session()
     service = ProductService(session)
